@@ -98,11 +98,24 @@ if __name__ == "__main__":
       j['_rawid'] = rawid
       j['_version'] = version
       j['updated'] = j['updated'].encode('utf-8')
-      j['title'] = re.sub("\s+", " ", j['title'].encode('utf-8'))
+      j['title'] = re.sub("\s+", " ", j['title'])
 
       # add to our database if we didn't have it before, or if this is a new version
       if not rawid in db or j['_version'] > db[rawid]['_version']:
-        db[rawid] = j
+        # the raw response has a lot of values that we do not need, so
+        # create a dict that captures information relevant to us.
+        summary = j.get("summary", None)
+        if summary is None:
+          summary = j["summary_detail"]["value"]
+        db[rawid] = {
+          "link": j["link"],
+          "pdf": j["link"].replace("abs", "pdf"),
+          "title": j["title"],
+          "summary": summary.replace("\n", " "),
+          "updated": j["updated"],
+          "publushed": j["published"],
+          "authors": [x["name"] for x in j["authors"]]
+        }
         print('Updated %s added %s' % (j['updated'], j['title']))
         num_added += 1
         num_added_total += 1
