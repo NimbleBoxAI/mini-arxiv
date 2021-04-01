@@ -58,6 +58,7 @@ class MiniArxiv():
     input_vec = self.vectorizer.transform([raw_str])
     distances, indices = self.nbrs.kneighbors(input_vec, n_neighbors = n_return)
     papers = self.titles_list[indices[0]]
+    print(papers)
     
     # fuzyy nn
     matches = process.extract(raw_str, papers, scorer=fuzz.QRatio, limit=n_return)
@@ -77,7 +78,7 @@ miniarxiv = MiniArxiv("./mini-arxiv.p")
 # https://fastapi.tiangolo.com/tutorial/response-model/
 
 class MiniArxivBaseResponse(BaseModel):
-  # model for asking things to NALA API
+  # model for asking things to NBX mini-arxiv API
   user_string: Optional[str] = None
   options: Optional[list] = None
   n_return: Optional[int] = 10

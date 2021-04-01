@@ -7,7 +7,18 @@ uvicorn main:app --reload --port=8123 [debug]
 uvicorn main:app --port=8123 [prod]
 
 # to get response
-curl -X GET http://127.0.0.1:8123/papers -d "{\"n_return\": 3}" 
+curl --location --request GET 'http://127.0.0.1:8123/papers' \
+--header 'Content-Type: text/plain' \
+--data-raw '{
+    "n_return": 5
+}'
+
+curl --location --request GET 'http://127.0.0.1:8123/papermatch' \
+--header 'Content-Type: text/plain' \
+--data-raw '{
+    "user_string": "BERT",
+    "n_return": 5
+}'
 ```
 
 #### arxiv-sanity for NBX Dashboard.
