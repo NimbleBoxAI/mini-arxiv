@@ -5,7 +5,7 @@ Queries arxiv API and downloads papers (the query is a parameter).
 The script is intended to enrich an existing database pickle (by default db.p),
 so this file will be loaded first, and then new results will be added to it.
 
-This is modified for use by NBX
+This is modified for use by NBX.
 """
 
 import re
@@ -114,7 +114,9 @@ if __name__ == "__main__":
           "summary": summary.replace("\n", " "),
           "updated": j["updated"],
           "publushed": j["published"],
-          "authors": [x["name"] for x in j["authors"]]
+          "authors": [x["name"] for x in j["authors"]],
+          "_version": j["_version"],
+          "category": j["arxiv_primary_category"]["term"] # get full category from taxonomy file
         }
         print('Updated %s added %s' % (j['updated'], j['title']))
         num_added += 1
