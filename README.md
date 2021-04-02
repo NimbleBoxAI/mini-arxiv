@@ -44,18 +44,15 @@ Args:
     n_return (int): number of latest papers to return.
 ```
 
-#### [WIP] `get_paper_by_category(category, n_return = 10)`
+#### `/categorymatch`
 ```
 Returns a json-able dictionary for papers in a certain category.
-
-Args:
-    category (str): paper category either arxiv code or complete string
-        of the category
-    n_return (int): number of latest papers to return.
 ```
+
+**NOTE**: The input will be the complete category string as given in the `./taxonomy` file. Eg. send `{"user_string": "Artificial Intelligence"}` and not `cs.AI`. Provide the category as an option to the user.
 
 ## Files
 
 There are two files:
 - `main.py`: The file that has the above mentioned APIs
-- `prepare.py`: prepares the dataset, expected to be run as a CRON job
+- `prepare.py`: prepares the dataset, expected to be run as a CRON job sometime post midnight PST, that's when the papers hit arxiv servers.

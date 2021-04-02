@@ -5,3 +5,4 @@ aiofiles==0.6.0
 ujson
 rapidfuzz
 scikit-learn
+feedparser
